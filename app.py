@@ -144,6 +144,3 @@ if __name__ == "__main__":
         host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
     )
 
-# salty-springs-47005
-# https://salty-springs-47005.herokuapp.com/
-# https://git.heroku.com/salty-springs-47005.git

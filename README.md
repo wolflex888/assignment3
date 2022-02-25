@@ -19,3 +19,6 @@ During implementing my project, I was using only one database table to store all
 
 2. When I query comment from database, not sure why it keep adding () (line 73-78) into my code which querying two comments at the same time. I will have to put it into a list (line 80-83) and disply one at a time.  
 
+# salty-springs-47005
+# https://salty-springs-47005.herokuapp.com/
+# https://git.heroku.com/salty-springs-47005.git

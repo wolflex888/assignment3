@@ -37,14 +37,16 @@
       <form method="POST" action="/logout">
         <input type="submit" value="Log Out" />
       </form>
-      <h1>Here is the comment history</h1>
-      <ul>
-       {% for item in comment %}
-        <li>Username: {{item.user_name}}</li>
-        <li>Rate: {{item.rate}}</li>
-        <li>Comment: {{item.comment}}</li>
-        {% endfor %}
-      </ul>
+      <div class="comment">
+        <h1>Here is the comment history</h1>
+        <ul>
+          {% for item in comment %}
+            <li>Username: {{item.user_name}}</li>
+            <li>Rate: {{item.rate}}</li>
+            <li>Comment: {{item.comment}}</li>
+          {% endfor %}
+        </ul>
+      </div>
     </div>
   </body>
 </html>

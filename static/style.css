@@ -11,3 +11,8 @@ img {
 audio {
   padding-bottom: 30px;
 }
+
+.comment{
+  border: 5px solid black;
+  background-color: bisque;
+}
