@@ -66,7 +66,6 @@ def comments():
 @app.route("/home")
 def index():
     movie_id = random.choice(MOVIE_IDS)
-    # movie_id = (flask.request.form["movie_id"],)
 
     # API calls
     (title, tagline, genre, poster_image) = get_movie_data(movie_id)
