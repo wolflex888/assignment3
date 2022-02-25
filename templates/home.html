@@ -1,0 +1,45 @@
+<html>
+  <head>
+    <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }}
+    />
+  </head>
+
+  <body>
+    <h1>Movie Explorer</h1>
+    <h2>{{title}}</h2>
+    <h3>{{tagline}}</h3>
+    <p>Genres: {{genre}}</p>
+    <div>
+      <img src="{{poster_image}}" width="500" height="700" />
+    </div>
+    <a href="{{wiki_url}}"> Click here to see Wikipedia page! </a><br /><br />
+    <div>
+      <form method="POST" action="/comments">
+        <label for="movie_id">Movie ID</label>
+        <input type="text" id="movie_id" name="movie_id" value="{{movie_id}}" />
+        <label for="rate">Rating(out of 5)</label>
+        <input
+          type="text"
+          name="rate"
+          id="rate"
+          size="5"
+          placeholder="5"
+        /><br /><br />
+        <input
+          type="text"
+          name="comment"
+          style="width: 400px; height: 100px"
+          placeholder="Leave a comment"
+        /><br /><br />
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+    <ol>
+      {% for item in comment %}
+      <li>{{item.user_name}}</li>
+      <li>{{item.rate}}</li>
+      <li>{{item.comment}}</li>
+      {% endfor %}
+    </ol>
+  </body>
+</html>

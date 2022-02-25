@@ -1,0 +1,19 @@
+<html>
+  <head>
+    <title>LogInPage</title>
+  </head>
+  <body>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <ul id="flashes" class="flashes">
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %} {% endwith %}
+    <form method="POST" action="/signup">
+      <input type="text" name="user_name" placeholder="Sign Up Here"/>
+      <input type="submit" value="Submit" />
+    </form>
+    <a href="{{url_for("login")}}">Log In</a>
+  </body>
+</html>
