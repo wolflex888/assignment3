@@ -12,7 +12,10 @@ audio {
   padding-bottom: 30px;
 }
 
-.comment{
-  border: 5px solid black;
-  background-color: bisque;
+.comm {
+  border:5px solid black;
+  background-color:bisque;
+  padding:20px;
+  font-family: cursive;
+  border-radius: 25px;
 }
