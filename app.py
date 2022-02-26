@@ -9,6 +9,7 @@ from flask_login import LoginManager, login_user, logout_user, current_user, Use
 
 from wikipedia import get_wiki_link
 from tmdb import get_movie_data
+import re
 
 login_manager = LoginManager()
 
@@ -16,7 +17,10 @@ app = flask.Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8zkdifenrk/ec]/'
 
 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+uri = os.getenv("DATABASE_URL")  # or other relevant config var
+if uri.startswith("postgres://"):
+    uri = uri.replace("postgres://", "postgresql://", 1)
+app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
