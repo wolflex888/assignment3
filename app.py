@@ -16,6 +16,15 @@ login_manager = LoginManager()
 app = flask.Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8zkdifenrk/ec]/'
 
+bp = flask.Blueprint("bp", __name__, template_folder="./static/react",)
+
+# route for serving React page
+@bp.route("/")
+def index():
+    # NB: DO NOT add an "index.html" file in your normal templates folder
+    # Flask will stop serving this React page correctly
+    return flask.render_template("index.html")
+
 
 uri = os.getenv("DATABASE_URL")  # or other relevant config var
 if uri.startswith("postgres://"):
@@ -142,6 +151,8 @@ def logout():
     logout_user()
     return flask.redirect("/login")
 
+
+app.register_blueprint(bp)
 
 if __name__ == "__main__":
     app.run(
