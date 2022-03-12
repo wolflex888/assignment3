@@ -152,10 +152,38 @@ def logout():
     return flask.redirect("/login")
 
 
+@app.route("/movie_comments", methods=["POST", "GET"])
+def movie_comments():
+    # import pdb
+
+    # pdb.set_trace()
+    movie_comments = Comment.query.filter_by(movie_id=157336).all()
+    movie_comment_text = [
+        {"movie_id": r.movie_id, "comment": r.comment, "rate": r.rate}
+        for r in movie_comments
+    ]
+    # fact = random.choice(movie_comments)
+    return flask.jsonify({"movie_comments": movie_comment_text})
+
+
+# @app.route("/delete_comments")
+# def delete_comments():
+#     comms = movie_comments()
+#     db.session.delete(comms)
+#     db.session.commit()
+#     return flask.jsonify({"fact": movie_comments()})
+
+
+# @app.route("/save_comments")
+# def save_comments():
+#     fact = " "
+#     return flask.jsonify({"fact": fact})
+
+
 app.register_blueprint(bp)
 
 if __name__ == "__main__":
     app.run(
-        host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", 8080)), debug=True
+        host=os.getenv("IP", "localhost"), port=int(os.getenv("PORT", 3000)), debug=True
     )
 
