@@ -166,12 +166,16 @@ def movie_comments():
     return flask.jsonify({"movie_comments": movie_comment_text})
 
 
-# @app.route("/delete_comments")
-# def delete_comments():
-#     comms = movie_comments()
-#     db.session.delete(comms)
-#     db.session.commit()
-#     return flask.jsonify({"fact": movie_comments()})
+@app.route("/delete_comments", methods=["POST"])
+def delete_comments():
+    delComm = request.form.get("rate1")
+    import pdb
+
+    pdb.set_trace()
+    delMovie = Comment.query.filter_by(rate=delComm).all()
+    db.session.delete(delMovie)
+    db.session.commit()
+    return flask.jsonify({"delete_comments": movie_comments()})
 
 
 # @app.route("/save_comments")

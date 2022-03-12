@@ -68,12 +68,12 @@ function App() {
 
 
   // const [Del, setDel] = useState(null);
-  // function deleteComment() {
-  //   fetch("/movie_comments", {
-  //     method: "POST",
-  //   }).then(res => res.json())
-  //     .then(data => setDel(data.data));
-  // }
+  function deleteComments() {
+    fetch("/delete_comments", {
+      method: "POST",
+    }).then(res => res.json())
+      .then(data => setComm(data.delete_comments));
+  }
 
   // const [Sav, setSav] = useState(null);
   // function saveComment() {
@@ -83,9 +83,6 @@ function App() {
   //     .then(data => setSav(data.data));
   // }
 
-  function deleteComments() {
-    console.log("hello")
-  }
 
   function saveComments() {
     console.log("goodbye")
@@ -97,8 +94,8 @@ function App() {
         <h1>Your reviews:</h1>
         <div>
           <p>Movie ID: 157336</p>
-          <input type="text" value={movie_rate[0]} name="rate" onChange={deleteComments} />
-          <input type="text" value={movie_comment[0]} name="comment" onChange={deleteComments} />
+          <input type="text" value={movie_rate[0]} name="rate1" onChange={deleteComments} />
+          <input type="text" value={movie_comment[0]} name="comment1" onChange={deleteComments} />
           <button className="button"
             onClick={deleteComments}>
             delete
@@ -106,8 +103,8 @@ function App() {
         </div>
         <div>
           <p>Movie ID: 157336</p>
-          <input type="text" value={movie_rate[1]} name="rate" onChange={deleteComments} />
-          <input type="text" value={movie_comment[1]} name="comment" onChange={deleteComments} />
+          <input type="text" value={movie_rate[1]} name="rate2" onChange={deleteComments} />
+          <input type="text" value={movie_comment[1]} name="comment2" onChange={deleteComments} />
           <button className="button"
             onClick={deleteComments}>
             delete
