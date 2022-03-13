@@ -2,6 +2,7 @@ import flask
 import os
 import random
 
+from flask_cors import CORS
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import ForeignKey
@@ -15,6 +16,8 @@ login_manager = LoginManager()
 
 app = flask.Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8zkdifenrk/ec]/'
+
+CORS(app)
 
 bp = flask.Blueprint("bp", __name__, template_folder="./static/react",)
 
@@ -152,19 +155,19 @@ def logout():
     return flask.redirect("/login")
 
 
-@app.route("/movie_comments", methods=["POST", "GET"])
+@app.route("/movie_comments", methods=["GET"])
 def movie_comments():
-    # import pdb
+    if request.method=="GET":
+        movie_comments = Comment.query.filter_by(movie_id=157336).all()
+        movie_comment_text = [
+            {"movie_id": r.movie_id, "comment": r.comment, "rate": r.rate, "comment_id": r.cid}
+            for r in movie_comments
+        ]
+        return flask.jsonify({"movie_comments": movie_comment_text})
 
-    # pdb.set_trace()
-    movie_comments = Comment.query.filter_by(movie_id=157336).all()
-    movie_comment_text = [
-        {"movie_id": r.movie_id, "comment": r.comment, "rate": r.rate}
-        for r in movie_comments
-    ]
-    # fact = random.choice(movie_comments)
-    return flask.jsonify({"movie_comments": movie_comment_text})
-
+@app.route("/edit_comments", methods = ["PATCH"])
+def edit_comments():
+    data = reqeust.form
 
 @app.route("/delete_comments", methods=["POST"])
 def delete_comments():
@@ -188,6 +191,6 @@ app.register_blueprint(bp)
 
 if __name__ == "__main__":
     app.run(
-        host=os.getenv("IP", "localhost"), port=int(os.getenv("PORT", 3000)), debug=True
+        host=os.getenv("IP", "localhost"), port=int(os.getenv("PORT", 3001)), debug=True
     )
 

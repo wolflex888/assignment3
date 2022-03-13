@@ -7,9 +7,9 @@ import { render } from '@testing-library/react';
 
 function App() {
   const [comm, setComm] = useState([]);
-  const [formData, setFormData] = useState(null);
   const [isLoading, setIsLoading] = useState(true)
-  const inputRef = useRef([])
+  const commentRef = useRef([])
+  const rateRef = useRef({})
 
    async function updateComments() {
       fetch('http://localhost:3001/movie_comments', {
@@ -25,14 +25,7 @@ function App() {
 
   useEffect(() => {
     updateComments()
-    .then(() => {
-      for (let i = 0; i < comm.length; i++){
-        inputRef.current[comm[i].comment_id] = {}
-        inputRef.current[comm[i].comment_id]["comment"] = comm[i].comment
-        inputRef.current[comm[i].comment_id]['rate'] = comm[i].rate
-      };
-      setIsLoading(false);
-    })
+    setIsLoading(false);
   }, []);
 
 
@@ -65,11 +58,7 @@ function App() {
 
 
   // const [Del, setDel] = useState(null);
-  function deleteComments() {
-    fetch("/delete_comments", {
-      method: "POST",
-    }).then(res => res.json())
-      .then(data => setComm(data.delete_comments));
+  function deleteComments(e) {
   };
 
   // const [Sav, setSav] = useState(null);
@@ -88,12 +77,14 @@ function App() {
   };
   
   const handleChange = (e) => {
-    for (let i = 0; i < comm.length; i++){
-      if (comm[i].comment_id == e.target.id)
-      comm[i][e.target.name] = e.target.value 
-    };
-    console.log(inputRef.current)
-  };
+    if (e.target.name=="comment"){
+      commentRef.current[e.target.id]=e.target.value
+    }
+    if (e.target.name=="rate"){
+      rateRef.current[e.target_id]=e.target.value
+    }
+  
+  }
 
   function editComments(e) {
     // fetch("http://localhost:3001/edit_comments", {
@@ -104,7 +95,6 @@ function App() {
     //   body: JSON.stringify({
     //     formData
     //   })})
-    console.log(inputRef.current)
   };
   if (isLoading){
     return (<div className="App">Loading Data</div>)
@@ -116,12 +106,12 @@ function App() {
       <header className="App-header">
         <h1>Your reviews:</h1>
           <form onSubmit={editComments}>
-            {comm && comm.map((item) => 
+            {comm && comm.map((item, index) => 
             <div>
               <label className='movie-id-tag'>Movie ID: 157336</label>
-              <input id={item.comment_id} ref={inputRef[item.comment_id]} name="rate" type="text" value={item.rate} onChange={handleChange}/>
-              <input id={item.comment_id} ref={inputRef[item.comment_id]} name="comment" type="text" value={item.comment} onChange={handleChange} />
-              <button id={item.comment_id} name="delete-button" type="submit">Delete</button>
+              <input id={item.comment_id} ref={(element) => {rateRef.current[item.comment_id] = element}} name="rate" type="text" value={item.rate} onChange={handleChange}/>
+              <input  id={item.comment_id} ref={(element) => {commentRef.current[item.comment_id] = element}} name="comment" type="text" value={item.comment} onChange={handleChange} />
+              <button id={item.comment_id} name="delete-button" type="submit" onClick={(element) => commentRef.current[item.comment_id].focus()}>Delete</button>
             </div>
           )}
           <button className="save-all-button" type="submit">Save Changes</button>
