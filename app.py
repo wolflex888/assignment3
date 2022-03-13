@@ -165,9 +165,14 @@ def movie_comments():
         ]
         return flask.jsonify({"movie_comments": movie_comment_text})
 
-@app.route("/edit_comments", methods = ["PATCH"])
+@app.route("/edit_comments", methods = ["PATCH", "GET"])
 def edit_comments():
-    data = reqeust.form
+    if request.method=="PATCH":
+        data = request.form
+        import pdb;pdb.set_trace()
+        stmt = Comment.update().values(comment=data.get('comment'), rate=data.get("rate")).where(cid=data.get("comment_id"))
+        db.session.execute(stmt)
+        db.session.commit()
 
 @app.route("/delete_comments", methods=["POST"])
 def delete_comments():

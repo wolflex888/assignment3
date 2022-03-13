@@ -68,13 +68,6 @@ function App() {
   //   }).then(res => res.json())
   //     .then(data => setSav(data.data));
   // }
-  const handleCommentChange = (e) =>{
-  };
-  
-
-  const handleRateChange = (e) => {
-
-  };
   
   const handleChange = (e) => {
     if (e.target.name=="comment"){
@@ -83,18 +76,21 @@ function App() {
     if (e.target.name=="rate"){
       rateRef.current[e.target_id]=e.target.value
     }
+    console.log(commentRef.current[e.target.id])
+    console.log(commentRef.current)
   
   }
 
   function editComments(e) {
-    // fetch("http://localhost:3001/edit_comments", {
-    //   method: "PATCH",
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     formData
-    //   })})
+    fetch("http://localhost:3001/edit_comments", {
+      method: "PATCH",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        comments: commentRef.current,
+        rate: rateRef.current
+      })})
   };
   if (isLoading){
     return (<div className="App">Loading Data</div>)
@@ -109,8 +105,8 @@ function App() {
             {comm && comm.map((item, index) => 
             <div>
               <label className='movie-id-tag'>Movie ID: 157336</label>
-              <input id={item.comment_id} ref={(element) => {rateRef.current[item.comment_id] = element}} name="rate" type="text" value={item.rate} onChange={handleChange}/>
-              <input  id={item.comment_id} ref={(element) => {commentRef.current[item.comment_id] = element}} name="comment" type="text" value={item.comment} onChange={handleChange} />
+              <input id={item.comment_id} ref={(element) => {rateRef.current[item.comment_id] = element}} name="rate" type="text" onChange={handleChange}/>
+              <input  id={item.comment_id} ref={(element) => {commentRef.current[item.comment_id] = element}} name="comment" type="text" onChange={handleChange} />
               <button id={item.comment_id} name="delete-button" type="submit" onClick={(element) => commentRef.current[item.comment_id].focus()}>Delete</button>
             </div>
           )}
